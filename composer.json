@@ -1,0 +1,54 @@
+{
+    "name": "jpmurray/LaravelRrule",
+    "type": "library",
+    "description": "A Laravel friendly package to manage date recurrence rules",
+    "keywords": [
+        "jpmurray",
+        "LaravelRrule",
+        "rrule",
+        "Laravel",
+        "package"
+    ],
+    "homepage": "https://github.com/jpmurray/LaravelRrule",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jean-Philippe Murray",
+            "email": "himself@jpmurray.net",
+            "homepage": "http://jpmurray.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.1",
+        "php" : "~5.6|~7.0",
+        "simshaun/recurr" : "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~4.0||~5.0",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "jpmurray\\LaravelRrule\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "jpmurray\\LaravelRrule\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "format": "phpcbf --standard=psr2 src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
