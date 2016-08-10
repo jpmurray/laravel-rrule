@@ -1,5 +1,5 @@
 {
-    "name": "jpmurray/LaravelRrule",
+    "name": "jpmurray/laravel-rrule",
     "type": "library",
     "description": "A Laravel friendly package to manage date recurrence rules",
     "keywords": [
