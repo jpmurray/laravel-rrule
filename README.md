@@ -9,6 +9,17 @@
 
 A simple helper to generate date occurences more fluently, using [simshaun/recurr](https://github.com/simshaun/recurr/).
 
+## Nota Bene
+This is my first package. I actually built this to get to gain a bit more know-how about packages. It might be useful. It might not. It might be badly constructed. It might not. Honestly, I'll try to maintain and improve it over time, but please bear with me as it's been built more to learn that to be the perfect package.
+
+And on that note: PRs are hapilly welcomed!
+
+## Roadmap
+- Implement `until` in rules (and other rules that aren't done yet!).
+- Arrange all of this with facades?
+- Provide controller and routes so we can get the content of `toText` from an AJAX call.
+- Form element generator to manage all the possible rules, in multiple language.
+
 ## Install
 
 Via Composer
