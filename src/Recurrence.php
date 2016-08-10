@@ -212,7 +212,7 @@ class Recurrence
     private function setOccurences()
     {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
-        $this->occurences = collect($transformer->transform($this->rule))->map(function ($item, $key){
+        $this->occurences = collect($transformer->transform($this->rule))->map(function ($item, $key) {
             return (object) [
                 'start' => Carbon::instance($item->getStart()),
                 'end' => Carbon::instance($item->getEnd())
@@ -223,7 +223,8 @@ class Recurrence
     /**
      * Creates a Rule object
      */
-    private function createRule(){
+    private function createRule()
+    {
         $this->setRuleString();
         $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
     }
@@ -232,7 +233,8 @@ class Recurrence
      * Will generate a toText from current value and return it
      * @return string A humand readable string of the current rule
      */
-    public function getToText(){
+    public function getToText()
+    {
         $this->createRule();
         $this->setToText();
 
@@ -243,7 +245,8 @@ class Recurrence
      * Will generate occurences from current value and return them
      * @return string A humand readable string of the current rule
      */
-    public function getOccurences(){
+    public function getOccurences()
+    {
         $this->createRule();
         $this->setOccurences();
 
