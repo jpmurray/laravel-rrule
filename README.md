@@ -50,8 +50,8 @@ $recurrence->build(); //will save object and generate the outputs
 Once the object has been saved, we can access the result like this (examples is set to above values):
 
 ```php
-$recurrence->toText; // "weekly in January, March, October and December on the Sunday, 2nd to the last Tuesday and 3rd Friday for 5 times"
-$recurrence->occurences; // returns a collection of Datetime object for each occurence
+$recurrence->getToText(); // returns the `toText` value. eg: "weekly in January, March, October and December on the Sunday, 2nd to the last Tuesday and 3rd Friday for 5 times"
+$recurrence->getOccurences(); // returns a collection of Datetime object for each occurence
 ```
 
 ## Change log
