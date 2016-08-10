@@ -11,15 +11,18 @@ class Recurrence {
     protected $lang;
     protected $rRuleFrequencies;
     protected $rRuleByDay;
+    protected $rRuleByMonth;
     protected $requestedFrequency;
     protected $requestedCount;
     protected $requestedInterval;
     protected $requestedDays;
+    protected $requestedMonths;
     protected $requestedStart;
     protected $requestedEnd;
+    protected $rRuleString;
+    protected $rule;
     public $toText;
-    public $rule;
-    public $rRuleString;
+    public $occurences;
 
     public function __construct() {
         $this->rRuleFrequencies = collect([
@@ -42,12 +45,28 @@ class Recurrence {
             'saturday' => 'SA',
         ]);
 
+        $this->rRuleByMonth = collect([
+            'january' => 1,
+            'february' => 2,
+            'march' => 3,
+            'april' => 4,
+            'may' => 5,
+            'june' => 6,
+            'july' => 7,
+            'august' => 8,
+            'september' => 9,
+            'october' => 10,
+            'november' => 11,
+            'december' => 12,
+        ]);
+
         $this->setLang();
     }
 
     public function setLang($lang = "en")
     {
         $this->lang = $lang;
+        return $this;
     }
 
     /**
@@ -56,7 +75,6 @@ class Recurrence {
      */
     public function setFrequency(string $requested) {
         $requested = strtoupper($requested);
-        //$this->requestedFrequency = "FREQ={$this->rRuleFrequencies->get($requested)};";
         $this->requestedFrequency = "FREQ={$requested};";
         return $this;
     }
@@ -94,6 +112,22 @@ class Recurrence {
 
         $values = implode(',', $values);
         $this->requestedDays = "BYDAY={$values};";
+        return $this;
+    }
+
+    /**
+     * Set the days for Rrule
+     * @param int $count The interval
+     */
+    public function setMonths(Array $months) {
+        $months = collect($months);
+
+        $values = $months->map(function ($item, $key) {
+            return $this->rRuleByMonth->get($item);
+        })->toArray();
+
+        $values = implode(',', $values);
+        $this->requestedMonths = "BYMONTH={$values};";
 
         return $this;
     }
@@ -117,6 +151,27 @@ class Recurrence {
     }
 
     /**
+     * Create the string for use in Rrule.
+     */
+    private function setRuleString() {
+        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}", ';');
+    }
+
+    private function setToText()
+    {
+        $textTransformer = new TextTransformer(
+            new \Recurr\Transformer\Translator($this->lang)
+        );  
+
+        $this->toText = $textTransformer->transform($this->rule);
+    }
+
+    private function setOccurences(){
+        $transformer = new \Recurr\Transformer\ArrayTransformer();
+        $this->occurences = collect($transformer->transform($this->rule));
+    }
+
+    /**
      * Create a Rule object
      * @return [type] [description]
      */
@@ -125,20 +180,8 @@ class Recurrence {
         $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
 
         $this->setToText();
+        $this->setOccurences();
         return $this;
-    }
-
-    /**
-     * Create the string for use in Rrule.
-     */
-    private function setRuleString() {
-        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}", ';');
-    }
-
-    private function setToText()
-    {
-        $textTransformer = new TextTransformer();
-        $this->toText = $textTransformer->transform($this->rule);
     }
 
 }

@@ -7,8 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+A simple helper to generate date occurences more fluently, using [simshaun/recurr](https://github.com/simshaun/recurr/).
 
 ## Install
 
@@ -21,8 +20,30 @@ $ composer require jpmurray/LaravelRrule
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$recurrence = new Recurrence();
+
+//of course, you can chain all those methods!
+$recurrence->setFrequency('weekly'); // Either one of `yearly`, `monthly`, `weekly`, `daily`, `hourly`, `minutly`, `secondly`
+$recurrence->setCount(20); // the number of occurences we want
+$recurrence->setInterval(1); // every Nth time
+$recurrence->setStart(Carbon::parse('August 9th 2016 21:18:00')); // a carbon object for when to start the occurences
+$recurrence->setEnd(Carbon::parse('August 9th 2016 22:00:10')); // a carbon object for when to end the occurences
+$recurrence->setDays([
+	['sunday', null],
+	['tuesday', -2],
+	['friday', 3],
+]); // the first is the day of the occurence, the other is the position (eg: -2: second to last; 3: third; null: not set)
+$recurrence->setMonths([
+	'january', 'march', 'october', 'december'
+]); // months of the occurences
+$recurrence->setLang('fr'); // for output to text. Defaults to english. Accepts ISO 639-1 language codes
+$recurrence->save(); //will save and generate the outputs
+```
+Once the object has been saved, we can access the result like this (examples is set to above values):
+
+```php
+$recurrence->toText; // "weekly in January, March, October and December on the Sunday, 2nd to the last Tuesday and 3rd Friday for 5 times"
+$recurrence->occurences; // returns a collection of Datetime object for each occurence
 ```
 
 ## Change log
@@ -31,6 +52,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
+NO TESTS AT THE MOMENT. PRs WELCOMED.
 ``` bash
 $ composer test
 ```
