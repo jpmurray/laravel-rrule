@@ -212,7 +212,12 @@ class Recurrence
     private function setOccurences()
     {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
-        $this->occurences = collect($transformer->transform($this->rule));
+        $this->occurences = collect($transformer->transform($this->rule))->map(function ($item, $key){
+            return (object) [
+                'start' => Carbon::instance($item->getStart()),
+                'end' => Carbon::instance($item->getEnd())
+            ];
+        });
     }
 
     /**
