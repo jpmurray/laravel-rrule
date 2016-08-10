@@ -4,12 +4,12 @@
     "description": "A Laravel friendly package to manage date recurrence rules",
     "keywords": [
         "jpmurray",
-        "LaravelRrule",
+        "jpmurray/laravel-rrule",
         "rrule",
         "Laravel",
         "package"
     ],
-    "homepage": "https://github.com/jpmurray/LaravelRrule",
+    "homepage": "https://github.com/jpmurray/laravel-rrule",
     "license": "MIT",
     "authors": [
         {
