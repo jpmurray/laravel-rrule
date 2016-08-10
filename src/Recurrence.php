@@ -22,10 +22,10 @@ class Recurrence
     protected $rRuleFrequencies;
     protected $rRuleByDay;
     protected $rRuleByMonth;
-    protected $rRuleString;
     protected $rule;
 
     public $occurences;
+    public $rRuleString;
     public $toText;
     
     public function __construct()
@@ -239,6 +239,17 @@ class Recurrence
         $this->setToText();
 
         return $this->toText;
+    }
+
+    /**
+     * Will return the Rrule string from current rules.
+     * @return string A Rrule string
+     */
+    public function getRruleString()
+    {
+        $this->createRule();
+
+        return $this->rRuleString;
     }
 
     /**
