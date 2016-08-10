@@ -9,7 +9,7 @@ class LaravelRruleServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind('laravel-rrule', function() {
+        $this->app->bind('laravel-rrule', function () {
             return new CreateRule;
         });
     }
