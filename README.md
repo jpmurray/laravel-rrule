@@ -47,11 +47,11 @@ $recurrence->setFrom(Carbon::now()->subMonth()); // calculate occurences from th
 $recurrence->setUntil(Carbon::now()->addMonths(2)); // calculate occurences until this date. Cannot be used with `setCount()`
 $recurrence->build(); //will save object and generate the outputs
 ```
-Once the object has been saved, we can access the result like this (examples is set to above values):
+Those next methods are not chainable:
 
 ```php
-$recurrence->getToText(); // returns the `toText` value. eg: "weekly in January, March, October and December on the Sunday, 2nd to the last Tuesday and 3rd Friday for 5 times"
-$recurrence->getOccurences(); // returns a collection of Datetime object for each occurence
+$recurrence->getToText(); // returns the `toText` value of current rules. eg: "weekly in January, March, October and December on the Sunday, 2nd to the last Tuesday and 3rd Friday for 5 times"
+$recurrence->getOccurences(); // returns a collection of Datetime object for each occurence with current rules
 ```
 
 ## Change log
