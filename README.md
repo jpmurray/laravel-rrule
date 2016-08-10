@@ -2,9 +2,7 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
+[![StyleCI](https://styleci.io/repos/65318014/shield)](https://styleci.io/repos/65318014)
 [![Total Downloads][ico-downloads]][link-downloads]
 
 A simple helper to generate date occurences more fluently, using [simshaun/recurr](https://github.com/simshaun/recurr/).
