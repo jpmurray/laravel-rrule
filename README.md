@@ -85,17 +85,17 @@ If you discover any security related issues, please email himself@jpmurray.net i
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/jpmurray/jpmurray/laravel-rrule.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/jpmurray/laravel-rrule.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/jpmurray/jpmurray/laravel-rrule/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/jpmurray/jpmurray/laravel-rrule.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/jpmurray/jpmurray/laravel-rrule.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/jpmurray/jpmurray/laravel-rrule.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/jpmurray/laravel-rrule/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/jpmurray/laravel-rrule.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/jpmurray/laravel-rrule.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/jpmurray/laravel-rrule.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/jpmurray/jpmurray/laravel-rrule
-[link-travis]: https://travis-ci.org/jpmurray/jpmurray/laravel-rrule
-[link-scrutinizer]: https://scrutinizer-ci.com/g/jpmurray/jpmurray/laravel-rrule/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/jpmurray/jpmurray/laravel-rrule
-[link-downloads]: https://packagist.org/packages/jpmurray/jpmurray/laravel-rrule
+[link-packagist]: https://packagist.org/packages/jpmurray/laravel-rrule
+[link-travis]: https://travis-ci.org/jpmurray/laravel-rrule
+[link-scrutinizer]: https://scrutinizer-ci.com/g/jpmurray/laravel-rrule/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/jpmurray/laravel-rrule
+[link-downloads]: https://packagist.org/packages/jpmurray/laravel-rrule
 [link-author]: https://github.com/jpmurray
 [link-contributors]: ../../contributors
