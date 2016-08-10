@@ -20,6 +20,7 @@ class Recurrence
     protected $requestedMonths;
     protected $requestedStart;
     protected $requestedEnd;
+    protected $requestedUntil;
     protected $rRuleString;
     protected $rule;
     public $toText;
@@ -65,6 +66,10 @@ class Recurrence
         $this->setLang();
     }
 
+    /**
+     * Set the language that will be used for the result of toText()
+     * @param string $lang An ISO-639-1 language code
+     */
     public function setLang($lang = "en")
     {
         $this->lang = $lang;
@@ -164,9 +169,12 @@ class Recurrence
      */
     private function setRuleString()
     {
-        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}", ';');
+        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}{$this->requestedUntil}", ';');
     }
 
+    /**
+     * Take the current rule, and make it humand readable in the setted language
+     */
     private function setToText()
     {
         $textTransformer = new TextTransformer(
@@ -176,6 +184,16 @@ class Recurrence
         $this->toText = $textTransformer->transform($this->rule);
     }
 
+
+    public function setUntil(Carbon $date)
+    {
+        $this->requestedUntil = "UNTIL={$date->format('Ymd')};";
+        return $this;
+    }
+
+    /**
+     * Will take the current rule and transform it to occurences
+     */
     private function setOccurences()
     {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
@@ -183,8 +201,7 @@ class Recurrence
     }
 
     /**
-     * Create a Rule object
-     * @return [type] [description]
+     * Build the occurences from the rule
      */
     public function build()
     {

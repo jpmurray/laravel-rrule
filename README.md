@@ -13,7 +13,7 @@ This is my first package. I actually built this to get to gain a bit more know-h
 And on that note: PRs are hapilly welcomed!
 
 ## Roadmap
-- Implement `until` in rules (and other rules that aren't done yet!).
+- Implement other rules that aren't done yet!
 - Arrange all of this with facades?
 - Provide controller and routes so we can get the content of `toText` from an AJAX call.
 - Form element generator to manage all the possible rules, in multiple language.
@@ -33,7 +33,7 @@ $recurrence = new Recurrence();
 
 //of course, you can chain all those methods!
 $recurrence->setFrequency('weekly'); // Either one of `yearly`, `monthly`, `weekly`, `daily`, `hourly`, `minutly`, `secondly`
-$recurrence->setCount(20); // the number of occurences we want
+$recurrence->setCount(20); // the number of occurences we want. Cannot be used with `setUntil()`
 $recurrence->setInterval(1); // every Nth time
 $recurrence->setStart(Carbon::parse('August 9th 2016 21:18:00')); // a carbon object for when to start the occurences
 $recurrence->setEnd(Carbon::parse('August 9th 2016 22:00:10')); // a carbon object for when to end the occurences
@@ -46,6 +46,7 @@ $recurrence->setMonths([
 	'january', 'march', 'october', 'december'
 ]); // months of the occurences
 $recurrence->setLang('fr'); // for output to text. Defaults to english. Accepts ISO 639-1 language codes
+$recurrence->setUntil(Carbon::now()->addMonths(2)); // calculate occurences until this date. Cannot be used with `setCount()`
 $recurrence->build(); //will save object and generate the outputs
 ```
 Once the object has been saved, we can access the result like this (examples is set to above values):
