@@ -216,13 +216,41 @@ class Recurrence
     }
 
     /**
+     * Creates a Rule object
+     */
+    private function createRule(){
+        $this->setRuleString();
+        $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
+    }
+
+    /**
+     * Will generate a toText from current value and return it
+     * @return string A humand readable string of the current rule
+     */
+    public function getToText(){
+        $this->createRule();
+        $this->setToText();
+
+        return $this->toText;
+    }
+
+    /**
+     * Will generate occurences from current value and return them
+     * @return string A humand readable string of the current rule
+     */
+    public function getOccurences(){
+        $this->createRule();
+        $this->setOccurences();
+
+        return $this->occurences;
+    }
+
+    /**
      * Build the occurences from the rule
      */
     public function build()
     {
-        $this->setRuleString();
-        $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
-
+        $this->createRule();
         $this->setToText();
         $this->setOccurences();
         return $this;
