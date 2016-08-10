@@ -13,10 +13,7 @@ This is my first package. I actually built this to get to gain a bit more know-h
 And on that note: PRs are hapilly welcomed!
 
 ## Roadmap
-- Implement other rules that aren't done yet!
-- Arrange all of this with facades?
-- Provide controller and routes so we can get the content of `toText` from an AJAX call.
-- Form element generator to manage all the possible rules, in multiple language.
+Check [this tag in the issues](https://github.com/jpmurray/laravel-rrule/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).
 
 ## Install
 
