@@ -4,6 +4,23 @@ All Notable changes to `jpmurray/laravel-rrule` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 2.0.0 - 2016-08-09
+
+### Added
+- Nothing.
+
+### Deprecated
+- `save()` method is now renamed `build()`
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 1.0.0 - 2016-08-09
 
 ### Added

@@ -186,7 +186,7 @@ class Recurrence
      * Create a Rule object
      * @return [type] [description]
      */
-    public function save()
+    public function build()
     {
         $this->setRuleString();
         $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);

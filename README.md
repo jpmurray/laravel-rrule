@@ -46,7 +46,7 @@ $recurrence->setMonths([
 	'january', 'march', 'october', 'december'
 ]); // months of the occurences
 $recurrence->setLang('fr'); // for output to text. Defaults to english. Accepts ISO 639-1 language codes
-$recurrence->save(); //will save and generate the outputs
+$recurrence->build(); //will save object and generate the outputs
 ```
 Once the object has been saved, we can access the result like this (examples is set to above values):
 
