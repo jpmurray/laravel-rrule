@@ -43,6 +43,7 @@ $recurrence->setMonths([
 	'january', 'march', 'october', 'december'
 ]); // months of the occurences
 $recurrence->setLang('fr'); // for output to text. Defaults to english. Accepts ISO 639-1 language codes
+$recurrence->setFrom(Carbon::now()->subMonth()); // calculate occurences from this date.
 $recurrence->setUntil(Carbon::now()->addMonths(2)); // calculate occurences until this date. Cannot be used with `setCount()`
 $recurrence->build(); //will save object and generate the outputs
 ```

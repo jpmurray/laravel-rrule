@@ -9,23 +9,25 @@ use Recurr\Transformer\TextTransformer;
 
 class Recurrence
 {
-    protected $lang;
+    protected $requestedCount;
+    protected $requestedDays;
+    protected $requestedEnd;
+    protected $requestedFrequency;
+    protected $requestedFrom;
+    protected $requestedInterval;
+    protected $requestedLang;
+    protected $requestedMonths;
+    protected $requestedStart;
+    protected $requestedUntil;
     protected $rRuleFrequencies;
     protected $rRuleByDay;
     protected $rRuleByMonth;
-    protected $requestedFrequency;
-    protected $requestedCount;
-    protected $requestedInterval;
-    protected $requestedDays;
-    protected $requestedMonths;
-    protected $requestedStart;
-    protected $requestedEnd;
-    protected $requestedUntil;
     protected $rRuleString;
     protected $rule;
-    public $toText;
-    public $occurences;
 
+    public $occurences;
+    public $toText;
+    
     public function __construct()
     {
         $this->rRuleFrequencies = collect([
@@ -72,7 +74,7 @@ class Recurrence
      */
     public function setLang($lang = "en")
     {
-        $this->lang = $lang;
+        $this->requestedLang = $lang;
         return $this;
     }
 
@@ -169,7 +171,7 @@ class Recurrence
      */
     private function setRuleString()
     {
-        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}{$this->requestedUntil}", ';');
+        $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}{$this->requestedUntil}{$this->requestedFrom}", ';');
     }
 
     /**
@@ -178,13 +180,26 @@ class Recurrence
     private function setToText()
     {
         $textTransformer = new TextTransformer(
-            new \Recurr\Transformer\Translator($this->lang)
+            new \Recurr\Transformer\Translator($this->requestedLang)
         );
 
         $this->toText = $textTransformer->transform($this->rule);
     }
 
+    /**
+     * Set the minimum date for occurence generation.
+     * @param Carbon $date The first date possible for occurences
+     */
+    public function setFrom(Carbon $date)
+    {
+        $this->requestedFrom = "DTSTART={$date->format('Ymd')};";
+        return $this;
+    }
 
+    /**
+     * Set the maximum date for occurence generation. Cannot be used with `setCount()`
+     * @param Carbon $date The last date possible for occurences
+     */
     public function setUntil(Carbon $date)
     {
         $this->requestedUntil = "UNTIL={$date->format('Ymd')};";
