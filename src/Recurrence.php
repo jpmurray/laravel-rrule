@@ -7,7 +7,8 @@ use Recurr\Frequency;
 use Recurr\Rule;
 use Recurr\Transformer\TextTransformer;
 
-class Recurrence {
+class Recurrence
+{
     protected $lang;
     protected $rRuleFrequencies;
     protected $rRuleByDay;
@@ -24,7 +25,8 @@ class Recurrence {
     public $toText;
     public $occurences;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->rRuleFrequencies = collect([
             "yearly" => Frequency::YEARLY,
             "monthly" => Frequency::MONTHLY,
@@ -73,7 +75,8 @@ class Recurrence {
      * Set the frequency for Rrule
      * @param Array $requested Requested frequency
      */
-    public function setFrequency(string $requested) {
+    public function setFrequency(string $requested)
+    {
         $requested = strtoupper($requested);
         $this->requestedFrequency = "FREQ={$requested};";
         return $this;
@@ -83,7 +86,8 @@ class Recurrence {
      * Set the count value for Rrule
      * @param int $count The count
      */
-    public function setCount(int $count) {
+    public function setCount(int $count)
+    {
         $this->requestedCount = "COUNT={$count};";
 
         return $this;
@@ -93,7 +97,8 @@ class Recurrence {
      * Set the interval value for Rrule
      * @param int $interval The interval
      */
-    public function setInterval(int $interval) {
+    public function setInterval(int $interval)
+    {
         $this->requestedInterval = "INTERVAL={$interval};";
 
         return $this;
@@ -103,7 +108,8 @@ class Recurrence {
      * Set the days for Rrule
      * @param int $count The interval
      */
-    public function setDays(Array $days) {
+    public function setDays(array $days)
+    {
         $days = collect($days);
 
         $values = $days->map(function ($item, $key) {
@@ -119,7 +125,8 @@ class Recurrence {
      * Set the days for Rrule
      * @param int $count The interval
      */
-    public function setMonths(Array $months) {
+    public function setMonths(array $months)
+    {
         $months = collect($months);
 
         $values = $months->map(function ($item, $key) {
@@ -136,7 +143,8 @@ class Recurrence {
      * Set the start date for the recurrence
      * @param Carbon $start Start date
      */
-    public function setStart(Carbon $start) {
+    public function setStart(Carbon $start)
+    {
         $this->requestedStart = $start;
         return $this;
     }
@@ -145,7 +153,8 @@ class Recurrence {
      * Set the end date for the recurrence
      * @param Carbon $end End date
      */
-    public function setEnd(Carbon $end) {
+    public function setEnd(Carbon $end)
+    {
         $this->requestedEnd = $end;
         return $this;
     }
@@ -153,7 +162,8 @@ class Recurrence {
     /**
      * Create the string for use in Rrule.
      */
-    private function setRuleString() {
+    private function setRuleString()
+    {
         $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}", ';');
     }
 
@@ -161,12 +171,13 @@ class Recurrence {
     {
         $textTransformer = new TextTransformer(
             new \Recurr\Transformer\Translator($this->lang)
-        );  
+        );
 
         $this->toText = $textTransformer->transform($this->rule);
     }
 
-    private function setOccurences(){
+    private function setOccurences()
+    {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $this->occurences = collect($transformer->transform($this->rule));
     }
@@ -175,13 +186,13 @@ class Recurrence {
      * Create a Rule object
      * @return [type] [description]
      */
-    public function save() {
-        $this->setRuleString();        
+    public function save()
+    {
+        $this->setRuleString();
         $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
 
         $this->setToText();
         $this->setOccurences();
         return $this;
     }
-
 }
