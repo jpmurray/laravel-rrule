@@ -25,7 +25,7 @@ And on that note: PRs are hapilly welcomed!
 Via Composer
 
 ``` bash
-$ composer require jpmurray/LaravelRrule
+$ composer require jpmurray/laravel-rrule
 ```
 
 ## Usage
