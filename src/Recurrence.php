@@ -79,6 +79,15 @@ class Recurrence
     }
 
     /**
+     * Get the language that will be used for the result of toText()
+     * @return string an ISO-639-1 language code
+     */
+    public function getLang()
+    {
+        return $this->requestedLang;
+    }
+
+    /**
      * Set the frequency for Rrule
      * @param Array $requested Requested frequency
      */
@@ -87,6 +96,15 @@ class Recurrence
         $requested = strtoupper($requested);
         $this->requestedFrequency = "FREQ={$requested};";
         return $this;
+    }
+
+    /**
+     * Get the frequency value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getFrequency()
+    {
+        return $this->requestedFrequency;
     }
 
     /**
@@ -101,6 +119,15 @@ class Recurrence
     }
 
     /**
+     * Get the count value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getCount()
+    {
+        return $this->requestedCount;
+    }
+
+    /**
      * Set the interval value for Rrule
      * @param int $interval The interval
      */
@@ -109,6 +136,15 @@ class Recurrence
         $this->requestedInterval = "INTERVAL={$interval};";
 
         return $this;
+    }
+
+    /**
+     * Get the frequency value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getInterval()
+    {
+        return $this->requestedInterval;
     }
 
     /**
@@ -126,6 +162,15 @@ class Recurrence
         $values = implode(',', $values);
         $this->requestedDays = "BYDAY={$values};";
         return $this;
+    }
+
+    /**
+     * Get the days value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getDays()
+    {
+        return $this->requestedDays;
     }
 
     /**
@@ -147,6 +192,15 @@ class Recurrence
     }
 
     /**
+     * Get the months value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getMonths()
+    {
+        return $this->requestedMonths;
+    }
+
+    /**
      * Set the start date for the recurrence
      * @param Carbon $start Start date
      */
@@ -155,6 +209,16 @@ class Recurrence
         $this->requestedStart = $start;
         return $this;
     }
+
+    /**
+     * Get the start date value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getStart()
+    {
+        return $this->requestedStart;
+    }
+
 
     /**
      * Set the end date for the recurrence
@@ -167,11 +231,31 @@ class Recurrence
     }
 
     /**
+     * Get the end date value for Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getEnd()
+    {
+        return $this->requestedEnd;
+    }
+
+    /**
      * Create the string for use in Rrule.
      */
     private function setRuleString()
     {
         $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}{$this->requestedUntil}{$this->requestedFrom}", ';');
+    }
+
+    /**
+     * Will return the Rrule string from current rules.
+     * @return string A Rrule string
+     */
+    public function getRruleString()
+    {
+        $this->createRule();
+
+        return $this->rRuleString;
     }
 
     /**
@@ -187,6 +271,18 @@ class Recurrence
     }
 
     /**
+     * Will generate a toText from current value and return it
+     * @return string A humand readable string of the current rule
+     */
+    public function getToText()
+    {
+        $this->createRule();
+        $this->setToText();
+
+        return $this->toText;
+    }
+
+    /**
      * Set the minimum date for occurence generation.
      * @param Carbon $date The first date possible for occurences
      */
@@ -197,6 +293,15 @@ class Recurrence
     }
 
     /**
+     * Get the string for use in Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getFrom()
+    {
+        return $this->requestedFrom;
+    }
+
+    /**
      * Set the maximum date for occurence generation. Cannot be used with `setCount()`
      * @param Carbon $date The last date possible for occurences
      */
@@ -204,6 +309,15 @@ class Recurrence
     {
         $this->requestedUntil = "UNTIL={$date->format('Ymd')};";
         return $this;
+    }
+
+    /**
+     * Get the string for use in Rrule
+     * @return string A formatted string for use in Rrule
+     */
+    public function getUntil()
+    {
+        return $this->requestedUntil;
     }
 
     /**
@@ -221,38 +335,6 @@ class Recurrence
     }
 
     /**
-     * Creates a Rule object
-     */
-    private function createRule()
-    {
-        $this->setRuleString();
-        $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
-    }
-
-    /**
-     * Will generate a toText from current value and return it
-     * @return string A humand readable string of the current rule
-     */
-    public function getToText()
-    {
-        $this->createRule();
-        $this->setToText();
-
-        return $this->toText;
-    }
-
-    /**
-     * Will return the Rrule string from current rules.
-     * @return string A Rrule string
-     */
-    public function getRruleString()
-    {
-        $this->createRule();
-
-        return $this->rRuleString;
-    }
-
-    /**
      * Will generate occurences from current value and return them
      * @return string A humand readable string of the current rule
      */
@@ -262,6 +344,15 @@ class Recurrence
         $this->setOccurences();
 
         return $this->occurences;
+    }
+
+    /**
+     * Creates a Rule object
+     */
+    private function createRule()
+    {
+        $this->setRuleString();
+        $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
     }
 
     /**
