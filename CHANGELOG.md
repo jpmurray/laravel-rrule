@@ -4,6 +4,11 @@ All Notable changes to `jpmurray/laravel-rrule` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 3.2.0 - 2016-08-11
+### Added
+- Getters for corresponding setters (ex: `setCount() now have a `getCount()`);
+- Some tests
+
 ## 3.1.0 - 2016-08-10
 
 ### Added

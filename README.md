@@ -60,7 +60,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-NO TESTS AT THE MOMENT. PRs WELCOMED.
 ``` bash
 $ composer test
 ```
