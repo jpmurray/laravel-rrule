@@ -24,6 +24,7 @@ class Recurrence {
     protected $rule;
 
     public $occurences;
+    public $rawValues = [];
     public $rRuleString;
     public $toText;
 
@@ -335,19 +336,25 @@ class Recurrence {
         $values->each(function ($item, $key) {
 
             if ($item[0] == "UNTIL") {
-                $this->setUntil(Carbon::parse($item[1]));
+                $until = Carbon::parse($item[1]);
+                $this->setUntil($until);
+                $this->rawValues['until'] = $until;
             }
 
             if ($item[0] == "DTSTART") {
-                $this->setFrom(Carbon::parse($item[1]));
+                $from = Carbon::parse($item[1]);
+                $this->setFrom($from);
+                $this->rawValues['from'] = $from;
             }
 
             if ($item[0] == "FREQ") {
                 $this->setFrequency($item[1]);
+                $this->rawValues['frequency'] = $item[1];
             }
 
             if ($item[0] == "INTERVAL") {
                 $this->setInterval($item[1]);
+                $this->rawValues['interval'] = $item[1];
             }
 
             if ($item[0] == "BYDAY") {
@@ -360,9 +367,22 @@ class Recurrence {
                 })->toArray();
 
                 $this->setDays($byDays);
+                $collect = new \Illuminate\Support\Collection($byDays);
+                $this->rawValues['bydays'] = $collect->map(function ($item, $key){
+                    return [$this->rRuleByDay->search($item[0]), $item[1]];
+                })->toArray();
             }
         });
         $this->createRule();
+    }
+
+    /**
+     * Return the raw value attribute
+     * @return array An array of raw values from the rRule string
+     */
+    public function getRawValues()
+    {
+        return $this->rawValues;
     }
 
     /**
