@@ -7,8 +7,7 @@ use Recurr\Frequency;
 use Recurr\Rule;
 use Recurr\Transformer\TextTransformer;
 
-class Recurrence
-{
+class Recurrence {
     protected $requestedCount;
     protected $requestedDays;
     protected $requestedEnd;
@@ -27,9 +26,8 @@ class Recurrence
     public $occurences;
     public $rRuleString;
     public $toText;
-    
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->rRuleFrequencies = new \Illuminate\Support\Collection([
             "yearly" => Frequency::YEARLY,
             "monthly" => Frequency::MONTHLY,
@@ -72,8 +70,7 @@ class Recurrence
      * Set the language that will be used for the result of toText()
      * @param string $lang An ISO-639-1 language code
      */
-    public function setLang($lang = "en")
-    {
+    public function setLang($lang = "en") {
         $this->requestedLang = $lang;
         return $this;
     }
@@ -82,8 +79,7 @@ class Recurrence
      * Get the language that will be used for the result of toText()
      * @return string an ISO-639-1 language code
      */
-    public function getLang()
-    {
+    public function getLang() {
         return $this->requestedLang;
     }
 
@@ -91,8 +87,7 @@ class Recurrence
      * Set the frequency for Rrule
      * @param Array $requested Requested frequency
      */
-    public function setFrequency(string $requested)
-    {
+    public function setFrequency(string $requested) {
         $requested = strtoupper($requested);
         $this->requestedFrequency = "FREQ={$requested};";
         return $this;
@@ -102,8 +97,7 @@ class Recurrence
      * Get the frequency value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getFrequency()
-    {
+    public function getFrequency() {
         return $this->requestedFrequency;
     }
 
@@ -111,8 +105,7 @@ class Recurrence
      * Set the count value for Rrule
      * @param int $count The count
      */
-    public function setCount(int $count)
-    {
+    public function setCount(int $count) {
         $this->requestedCount = "COUNT={$count};";
 
         return $this;
@@ -122,8 +115,7 @@ class Recurrence
      * Get the count value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getCount()
-    {
+    public function getCount() {
         return $this->requestedCount;
     }
 
@@ -131,8 +123,7 @@ class Recurrence
      * Set the interval value for Rrule
      * @param int $interval The interval
      */
-    public function setInterval(int $interval)
-    {
+    public function setInterval(int $interval) {
         $this->requestedInterval = "INTERVAL={$interval};";
 
         return $this;
@@ -142,8 +133,7 @@ class Recurrence
      * Get the frequency value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getInterval()
-    {
+    public function getInterval() {
         return $this->requestedInterval;
     }
 
@@ -151,8 +141,7 @@ class Recurrence
      * Set the days for Rrule
      * @param int $count The interval
      */
-    public function setDays(array $days)
-    {
+    public function setDays(array $days) {
 
         $days = new \Illuminate\Support\Collection($days);
 
@@ -170,8 +159,7 @@ class Recurrence
      * Get the days value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getDays()
-    {
+    public function getDays() {
         return $this->requestedDays;
     }
 
@@ -179,8 +167,7 @@ class Recurrence
      * Set the days for Rrule
      * @param int $count The interval
      */
-    public function setMonths(array $months)
-    {
+    public function setMonths(array $months) {
         $months = new \Illuminate\Support\Collection($months);
 
         $values = $months->map(function ($item, $key) {
@@ -197,8 +184,7 @@ class Recurrence
      * Get the months value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getMonths()
-    {
+    public function getMonths() {
         return $this->requestedMonths;
     }
 
@@ -206,8 +192,7 @@ class Recurrence
      * Set the start date for the recurrence
      * @param Carbon $start Start date
      */
-    public function setStart(Carbon $start)
-    {
+    public function setStart(Carbon $start) {
         $this->requestedStart = $start;
         return $this;
     }
@@ -216,18 +201,15 @@ class Recurrence
      * Get the start date value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getStart()
-    {
+    public function getStart() {
         return $this->requestedStart;
     }
-
 
     /**
      * Set the end date for the recurrence
      * @param Carbon $end End date
      */
-    public function setEnd(Carbon $end)
-    {
+    public function setEnd(Carbon $end) {
         $this->requestedEnd = $end;
         return $this;
     }
@@ -236,16 +218,14 @@ class Recurrence
      * Get the end date value for Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getEnd()
-    {
+    public function getEnd() {
         return $this->requestedEnd;
     }
 
     /**
      * Create the string for use in Rrule.
      */
-    private function setRuleString()
-    {
+    private function setRuleString() {
         $this->rRuleString = rtrim("{$this->requestedCount}{$this->requestedFrequency}{$this->requestedInterval}{$this->requestedDays}{$this->requestedMonths}{$this->requestedUntil}{$this->requestedFrom}", ';');
     }
 
@@ -253,8 +233,7 @@ class Recurrence
      * Will return the Rrule string from current rules.
      * @return string A Rrule string
      */
-    public function getRruleString()
-    {
+    public function getRruleString() {
         $this->createRule();
 
         return $this->rRuleString;
@@ -263,8 +242,7 @@ class Recurrence
     /**
      * Take the current rule, and make it humand readable in the setted language
      */
-    private function setToText()
-    {
+    private function setToText() {
         $textTransformer = new TextTransformer(
             new \Recurr\Transformer\Translator($this->requestedLang)
         );
@@ -276,8 +254,7 @@ class Recurrence
      * Will generate a toText from current value and return it
      * @return string A humand readable string of the current rule
      */
-    public function getToText()
-    {
+    public function getToText() {
         $this->createRule();
         $this->setToText();
 
@@ -288,8 +265,7 @@ class Recurrence
      * Set the minimum date for occurence generation.
      * @param Carbon $date The first date possible for occurences
      */
-    public function setFrom(Carbon $date)
-    {
+    public function setFrom(Carbon $date) {
         $this->requestedFrom = "DTSTART={$date->format('Ymd')};";
         return $this;
     }
@@ -298,8 +274,7 @@ class Recurrence
      * Get the string for use in Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getFrom()
-    {
+    public function getFrom() {
         return $this->requestedFrom;
     }
 
@@ -307,8 +282,7 @@ class Recurrence
      * Set the maximum date for occurence generation. Cannot be used with `setCount()`
      * @param Carbon $date The last date possible for occurences
      */
-    public function setUntil(Carbon $date)
-    {
+    public function setUntil(Carbon $date) {
         $this->requestedUntil = "UNTIL={$date->format('Ymd')};";
         return $this;
     }
@@ -317,23 +291,21 @@ class Recurrence
      * Get the string for use in Rrule
      * @return string A formatted string for use in Rrule
      */
-    public function getUntil()
-    {
+    public function getUntil() {
         return $this->requestedUntil;
     }
 
     /**
      * Will take the current rule and transform it to occurences
      */
-    private function setOccurences()
-    {
+    private function setOccurences() {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $occurenceCollection = new \Illuminate\Support\Collection($transformer->transform($this->rule));
-        
+
         $this->occurences = $occurenceCollection->collapse()->map(function ($item, $key) {
             return (object) [
                 'start' => Carbon::instance($item->getStart()),
-                'end' => Carbon::instance($item->getEnd())
+                'end' => Carbon::instance($item->getEnd()),
             ];
         });
     }
@@ -342,8 +314,7 @@ class Recurrence
      * Will generate occurences from current value and return them
      * @return string A humand readable string of the current rule
      */
-    public function getOccurences()
-    {
+    public function getOccurences() {
         $this->createRule();
         $this->setOccurences();
 
@@ -354,53 +325,49 @@ class Recurrence
      * EXPERIMENTAL: Set the recurrence object accordning to a rRule highlight_string
      * @param string $string An rRule string
      */
-    public function setRuleFromString($string)
-    {
+    public function setRuleFromString($string) {
         $values = new \Illuminate\Support\Collection(explode(';', $string));
 
-        $values = $values->map(function ($item, $key){
+        $values = $values->map(function ($item, $key) {
             return new \Illuminate\Support\Collection(explode('=', $item));
         });
 
-        $values->each(function ($item, $key){
+        $values->each(function ($item, $key) {
 
-            if($item[0]=="UNTIL"){
-               $this->setUntil(Carbon::parse($item[1])); 
+            if ($item[0] == "UNTIL") {
+                $this->setUntil(Carbon::parse($item[1]));
             }
 
-            if($item[0]=="DTSTART"){
-               $this->setFrom(Carbon::parse($item[1])); 
+            if ($item[0] == "DTSTART") {
+                $this->setFrom(Carbon::parse($item[1]));
             }
 
-            if($item[0]=="FREQ"){
-               $this->setFrequency($item[1]); 
+            if ($item[0] == "FREQ") {
+                $this->setFrequency($item[1]);
             }
 
-            if($item[0]=="INTERVAL"){
-               $this->setInterval($item[1]); 
+            if ($item[0] == "INTERVAL") {
+                $this->setInterval($item[1]);
             }
 
-            if($item[0]=="BYDAY"){
+            if ($item[0] == "BYDAY") {
                 $days = new \Illuminate\Support\Collection(explode(',', $item[1]));
-                
-                $byDays = $days->map(function ($item, $key){
+
+                $byDays = $days->map(function ($item, $key) {
                     $day = substr($item, -2);
                     $dayInt = str_replace($day, '', $item);
                     return [$day, $dayInt];
                 })->toArray();
 
-                $this->setDays($byDays); 
+                $this->setDays($byDays);
             }
         });
-
-        dd($this);
     }
 
     /**
      * Creates a Rule object
      */
-    private function createRule()
-    {
+    private function createRule() {
         $this->setRuleString();
         $this->rule = new Rule($this->rRuleString, $this->requestedStart, $this->requestedEnd);
     }
@@ -408,8 +375,7 @@ class Recurrence
     /**
      * Build the occurences from the rule
      */
-    public function build()
-    {
+    public function build() {
         $this->createRule();
         $this->setToText();
         $this->setOccurences();
