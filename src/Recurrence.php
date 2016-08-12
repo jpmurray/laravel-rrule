@@ -30,7 +30,7 @@ class Recurrence
     
     public function __construct()
     {
-        $this->rRuleFrequencies = collect([
+        $this->rRuleFrequencies = new \Illuminate\Support\Collection([
             "yearly" => Frequency::YEARLY,
             "monthly" => Frequency::MONTHLY,
             "weekly" => Frequency::WEEKLY,
@@ -40,7 +40,7 @@ class Recurrence
             "secondly" => Frequency::SECONDLY,
         ]);
 
-        $this->rRuleByDay = collect([
+        $this->rRuleByDay = new \Illuminate\Support\Collection([
             'sunday' => 'SU',
             'monday' => 'MO',
             'tuesday' => 'TU',
@@ -50,7 +50,7 @@ class Recurrence
             'saturday' => 'SA',
         ]);
 
-        $this->rRuleByMonth = collect([
+        $this->rRuleByMonth = new \Illuminate\Support\Collection([
             'january' => 1,
             'february' => 2,
             'march' => 3,
@@ -153,7 +153,8 @@ class Recurrence
      */
     public function setDays(array $days)
     {
-        $days = collect($days);
+
+        $days = new \Illuminate\Support\Collection($days);
 
         $values = $days->map(function ($item, $key) {
             return "{$item[1]}{$this->rRuleByDay->get($item[0])}";
@@ -179,7 +180,7 @@ class Recurrence
      */
     public function setMonths(array $months)
     {
-        $months = collect($months);
+        $months = new \Illuminate\Support\Collection($months);
 
         $values = $months->map(function ($item, $key) {
             return $this->rRuleByMonth->get($item);
@@ -326,7 +327,9 @@ class Recurrence
     private function setOccurences()
     {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
-        $this->occurences = collect($transformer->transform($this->rule))->map(function ($item, $key) {
+        $occurenceCollection = new \Illuminate\Support\Collection($transformer->transform($this->rule));
+        
+        $this->occurences = $occurenceCollection->collapse()->map(function ($item, $key) {
             return (object) [
                 'start' => Carbon::instance($item->getStart()),
                 'end' => Carbon::instance($item->getEnd())
