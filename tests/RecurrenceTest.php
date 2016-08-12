@@ -4,7 +4,8 @@ use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 use jpmurray\LaravelRrule\Recurrence;
 
-class RecurrenceTest extends TestCase {
+class RecurrenceTest extends TestCase
+{
     /**
      * @var array
      */
@@ -15,7 +16,8 @@ class RecurrenceTest extends TestCase {
      *
      * @param array $items
      */
-    public function __construct($items = []) {
+    public function __construct($items = [])
+    {
         $this->recurrence = new Recurrence();
     }
 
@@ -24,7 +26,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setFrequency() {
+    public function test_setFrequency()
+    {
         $this->recurrence->setFrequency('weekly');
         $expected = "FREQ=WEEKLY;";
         $this->assertEquals($this->recurrence->getFrequency(), $expected);
@@ -35,7 +38,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setInterval() {
+    public function test_setInterval()
+    {
         $this->recurrence->setInterval(1);
         $expected = "INTERVAL=1;";
         $this->assertEquals($this->recurrence->getInterval(), $expected);
@@ -46,9 +50,10 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setDays_with_one_value_no_constraint() {
+    public function test_setDays_with_one_value_no_constraint()
+    {
         $this->recurrence->setDays([
-            ['sunday', NULL],
+            ['sunday', null],
         ]);
         $expected = "BYDAY=SU;";
         $this->assertEquals($this->recurrence->getDays(), $expected);
@@ -59,7 +64,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setDays_with_one_value_with_constraint() {
+    public function test_setDays_with_one_value_with_constraint()
+    {
         $this->recurrence->setDays([
             ['sunday', -1],
         ]);
@@ -72,10 +78,11 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setDays_with_multiple_value_no_constraint() {
+    public function test_setDays_with_multiple_value_no_constraint()
+    {
         $this->recurrence->setDays([
-            ['sunday', NULL],
-            ['friday', NULL],
+            ['sunday', null],
+            ['friday', null],
         ]);
         $expected = "BYDAY=SU,FR;";
         $this->assertEquals($this->recurrence->getDays(), $expected);
@@ -86,10 +93,11 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setDays_with_multiple_value_with_constraint() {
+    public function test_setDays_with_multiple_value_with_constraint()
+    {
         $this->recurrence->setDays([
             ['sunday', -1],
-            ['friday', NULL],
+            ['friday', null],
         ]);
         $expected = "BYDAY=-1SU,FR;";
         $this->assertEquals($this->recurrence->getDays(), $expected);
@@ -100,7 +108,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setMonths_with_one_value() {
+    public function test_setMonths_with_one_value()
+    {
         $this->recurrence->setMonths(['january']);
         $expected = "BYMONTH=1;";
         $this->assertEquals($this->recurrence->getMonths(), $expected);
@@ -111,7 +120,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setMonths_with_multiple_value() {
+    public function test_setMonths_with_multiple_value()
+    {
         $this->recurrence->setMonths(['january', 'october', 'august']);
         $expected = "BYMONTH=1,10,8;";
         $this->assertEquals($this->recurrence->getMonths(), $expected);
@@ -122,7 +132,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setStart() {
+    public function test_setStart()
+    {
         $now = Carbon::now();
         $this->recurrence->setStart($now);
         $this->assertEquals($this->recurrence->getStart(), $now);
@@ -133,7 +144,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setEnd() {
+    public function test_setEnd()
+    {
         $now = Carbon::now();
         $this->recurrence->setEnd($now);
         $this->assertEquals($this->recurrence->getEnd(), $now);
@@ -144,13 +156,15 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_string_generation_for_rrule() {
+    public function test_string_generation_for_rrule()
+    {
         $expected = "COUNT=1;FREQ=WEEKLY;INTERVAL=1;BYDAY=MO";
         $this->recurrence->setCount(1)->setFrequency('weekly')->setInterval(1)->setDays([['monday', null]]);
         $this->assertEquals($this->recurrence->getRruleString(), $expected);
     }
 
-    public function test_occurence_generation(){
+    public function test_occurence_generation()
+    {
         $this->recurrence->setCount(5)->setFrequency('weekly')->setInterval(1)->setDays([['monday', null]]);
 
         $this->assertCount(5, $this->recurrence->getOccurences());
@@ -168,7 +182,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_getToText() {
+    public function test_getToText()
+    {
         $this->recurrence->setCount(1)->setFrequency('weekly')->setInterval(1)->setDays([['monday', null]]);
         
         $expected = "weekly on Monday once";
@@ -180,7 +195,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_getToText_fr() {
+    public function test_getToText_fr()
+    {
         $this->recurrence->setCount(1)->setFrequency('weekly')->setInterval(1)->setDays([['monday', null]])->setLang('fr');
 
         $expected = "chaque semaine le lundi une fois";
@@ -192,7 +208,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setFrom() {
+    public function test_setFrom()
+    {
         $now = Carbon::now();
         $this->recurrence->setFrom($now);
         $expected = "DTSTART={$now->format('Ymd')};";
@@ -205,7 +222,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setUntil() {
+    public function test_setUntil()
+    {
         $now = Carbon::now();
         $this->recurrence->setUntil($now);
         $expected = "UNTIL={$now->format('Ymd')};";
@@ -218,7 +236,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_set_language() {
+    public function test_set_language()
+    {
         $this->recurrence->setLang('fr');
         $expected = "fr";
         $this->assertEquals($this->recurrence->getLang(), $expected);
@@ -229,7 +248,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_default_language() {
+    public function test_default_language()
+    {
         $expected = "en";
         $this->assertEquals($this->recurrence->getLang(), $expected);
     }
@@ -239,7 +259,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_setCount() {
+    public function test_setCount()
+    {
         $this->recurrence->setCount(1);
         $expected = "COUNT=1;";
         $this->assertEquals($this->recurrence->getCount(), $expected);
@@ -250,7 +271,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_if_rRuleFrequencies_attribute_exists() {
+    public function test_if_rRuleFrequencies_attribute_exists()
+    {
         $this->assertClassHasAttribute('rRuleFrequencies', Recurrence::class);
     }
 
@@ -259,7 +281,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_if_rRuleByDay_attribute_exists() {
+    public function test_if_rRuleByDay_attribute_exists()
+    {
         $this->assertClassHasAttribute('rRuleByDay', Recurrence::class);
     }
 
@@ -268,10 +291,8 @@ class RecurrenceTest extends TestCase {
      *
      * @return void
      */
-    public function test_if_rRuleByMonth_attribute_exists() {
+    public function test_if_rRuleByMonth_attribute_exists()
+    {
         $this->assertClassHasAttribute('rRuleByMonth', Recurrence::class);
     }
-
-
-    
 }
