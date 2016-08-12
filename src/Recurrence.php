@@ -362,6 +362,7 @@ class Recurrence {
                 $this->setDays($byDays);
             }
         });
+        $this->createRule();
     }
 
     /**
