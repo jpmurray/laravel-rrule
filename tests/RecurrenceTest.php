@@ -152,7 +152,8 @@ class RecurrenceTest extends TestCase {
 
     public function test_occurence_generation(){
         $this->recurrence->setCount(5)->setFrequency('weekly')->setInterval(1)->setDays([['monday', null]]);
-
+        //dd($this->recurrence->getToText());
+        
         $this->assertCount(5, $this->recurrence->getOccurences());
         foreach ($this->recurrence->getOccurences() as $key => $occurence) {
             $this->assertInternalType('object', $occurence);

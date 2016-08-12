@@ -4,6 +4,10 @@ All Notable changes to `jpmurray/laravel-rrule` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## master - next version
+### Added
+- Added a `setRuleFromString()` method to set the recurrence object from a correctly formatted rRule string. THIS IS EXPERIMENTAL AND NOT PROPERLY TESTED (yet).
+
 ## 3.2.0 - 2016-08-11
 ### Added
 - Getters for corresponding setters (ex: `setCount() now have a `getCount()`);

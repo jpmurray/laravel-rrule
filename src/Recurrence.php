@@ -157,7 +157,8 @@ class Recurrence
         $days = new \Illuminate\Support\Collection($days);
 
         $values = $days->map(function ($item, $key) {
-            return "{$item[1]}{$this->rRuleByDay->get($item[0])}";
+            $day = (strlen($item[0]) > 2 ? $this->rRuleByDay->get($item[0]) : $item[0]);
+            return "{$item[1]}{$day}";
         })->toArray();
 
         $values = implode(',', $values);
@@ -347,6 +348,52 @@ class Recurrence
         $this->setOccurences();
 
         return $this->occurences;
+    }
+
+    /**
+     * EXPERIMENTAL: Set the recurrence object accordning to a rRule highlight_string
+     * @param string $string An rRule string
+     */
+    public function setRuleFromString($string)
+    {
+        $values = new \Illuminate\Support\Collection(explode(';', $string));
+
+        $values = $values->map(function ($item, $key){
+            return new \Illuminate\Support\Collection(explode('=', $item));
+        });
+
+        $values->each(function ($item, $key){
+
+            if($item[0]=="UNTIL"){
+               $this->setUntil(Carbon::parse($item[1])); 
+            }
+
+            if($item[0]=="DTSTART"){
+               $this->setFrom(Carbon::parse($item[1])); 
+            }
+
+            if($item[0]=="FREQ"){
+               $this->setFrequency($item[1]); 
+            }
+
+            if($item[0]=="INTERVAL"){
+               $this->setInterval($item[1]); 
+            }
+
+            if($item[0]=="BYDAY"){
+                $days = new \Illuminate\Support\Collection(explode(',', $item[1]));
+                
+                $byDays = $days->map(function ($item, $key){
+                    $day = substr($item, -2);
+                    $dayInt = str_replace($day, '', $item);
+                    return [$day, $dayInt];
+                })->toArray();
+
+                $this->setDays($byDays); 
+            }
+        });
+
+        dd($this);
     }
 
     /**
