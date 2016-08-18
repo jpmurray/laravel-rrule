@@ -7,8 +7,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## master - next version
 ### Added
 - Added a `setRuleFromString()` method to set the recurrence object from a correctly formatted rRule string. THIS IS EXPERIMENTAL AND NOT PROPERLY TESTED (yet).
-- The `setRuleFromString()` method sets a public attribute to the recurrence object called `rawValues`. This is especially useful when working with forms, this could help set the default value for an edit page. 
+- The `setRuleFromString()` method sets a public attribute to the recurrence object called `rawValues`. This is especially useful when working with forms, this could help set the default value for an edit page.
 - Added `getRawValues()` method to get the corresponding attribute.
+
+### Fixed
+- Fixed occurences generation
+- Fixed references to "thursday" that pointed to "tuesday"
 
 ## 3.2.0 - 2016-08-11
 ### Added

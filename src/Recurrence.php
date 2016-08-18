@@ -44,7 +44,7 @@ class Recurrence {
             'monday' => 'MO',
             'tuesday' => 'TU',
             'wednesday' => 'WE',
-            'thursday' => 'TU',
+            'thursday' => 'TH',
             'friday' => 'FR',
             'saturday' => 'SA',
         ]);
@@ -303,7 +303,7 @@ class Recurrence {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $occurenceCollection = new \Illuminate\Support\Collection($transformer->transform($this->rule));
 
-        $this->occurences = $occurenceCollection->collapse()->map(function ($item, $key) {
+        $this->occurences = $occurenceCollection->map(function ($item, $key) {
             return (object) [
                 'start' => Carbon::instance($item->getStart()),
                 'end' => Carbon::instance($item->getEnd()),
@@ -318,7 +318,6 @@ class Recurrence {
     public function getOccurences() {
         $this->createRule();
         $this->setOccurences();
-
         return $this->occurences;
     }
 
