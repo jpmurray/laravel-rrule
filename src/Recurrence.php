@@ -88,7 +88,7 @@ class Recurrence {
      * Set the frequency for Rrule
      * @param Array $requested Requested frequency
      */
-    public function setFrequency(string $requested) {
+    public function setFrequency($requested) {
         $requested = strtoupper($requested);
         $this->requestedFrequency = "FREQ={$requested};";
         return $this;
@@ -106,7 +106,7 @@ class Recurrence {
      * Set the count value for Rrule
      * @param int $count The count
      */
-    public function setCount(int $count) {
+    public function setCount($count) {
         $this->requestedCount = "COUNT={$count};";
 
         return $this;
@@ -124,7 +124,7 @@ class Recurrence {
      * Set the interval value for Rrule
      * @param int $interval The interval
      */
-    public function setInterval(int $interval) {
+    public function setInterval($interval) {
         $this->requestedInterval = "INTERVAL={$interval};";
 
         return $this;
